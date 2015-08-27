@@ -16,7 +16,7 @@ var http = require('http');
    return Math.floor(Math.random()* 6000) + 3000;
  }
 
-var port = normalizePort(process.env.PORT || randomPortNumber());
+var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**

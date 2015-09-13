@@ -5,28 +5,21 @@ var Superhero = mongoose.model('superheros');
 
 router.get('/superheros', function(req, res) {
   Superhero.find(function(err, superheros){
-    console.log(superheros);
-    res.render(
-      'api',
-      {title : 'Superhero API', superheros : superheros}
-    );
+    res.json(superheros);
   });
 });
 
 router.post('/superheros', function(req, res) {
-  new Superhero({name : req.body.name})
+  new Superhero(req.body)
   .save(function(err, superhero) {
-    res.redirect('/api/superheros');
+    res.json({message: "Success!"});
   });
 });
 
 router.get('/superhero/:id', function(req, res) {
   var query = {"_id": req.params.id};
   Superhero.findOne(query, function(err, superhero){
-    res.render(
-      'superhero',
-      {title : 'Superhero API - ' + superhero.name, superhero : superhero}
-    );
+    res.json(superhero);
   });
 });
 
@@ -36,17 +29,14 @@ router.put('/superhero/:id', function(req, res) {
   var update = {name : req.body.name};
   var options = {new: true};
   Superhero.findOneAndUpdate(query, update, options, function(err, superhero){
-    res.render(
-      'superhero',
-      {title : 'Superhero API - ' + superhero.name, superhero : superhero}
-    );
+    res.json(superhero);
   });
 });
 
 router.delete('/superhero/:id', function(req, res) {
   var query = {"_id": req.params.id};
   Superhero.findOneAndRemove(query, function(err, superhero){
-    res.redirect('/api/superheros');
+    res.json(superhero);
   });
 });
 
